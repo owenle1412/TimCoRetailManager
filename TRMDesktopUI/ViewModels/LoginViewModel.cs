@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using TRMDesktopUI.Helpers;
+using TRMDesktopUI.Models;
 
 namespace TRMDesktopUI.ViewModels
 {
@@ -62,12 +63,28 @@ namespace TRMDesktopUI.ViewModels
         {
             try
             {
-                var result = await _apiHelper.Authenticate(UserName, Password);
+                //AuthenticatedUser result = await _apiHelper.Authenticate(UserName, Password);
+                AuthenticatedUser result = await ReturnSampleUser();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }          
+        }
+
+        // Temporary use in replacement of identity
+        public async Task<AuthenticatedUser> ReturnSampleUser()
+        {
+            var result = await Task.Run(() =>
+            {
+                return new AuthenticatedUser
+                {
+                    Access_Token = "",
+                    UserName = "owenle@gmail.com"
+                };
+            });
+
+            return result;
         }
     }
 }
